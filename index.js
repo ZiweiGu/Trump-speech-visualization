@@ -232,7 +232,7 @@ svg2.append("text")
   .attr("x",0 - (height / 2))
   .attr("dy", "1em")
   .style("text-anchor", "middle")
-  .text("# of words");
+  .text("# of mentions");
 
 svg2.append("g")
   .attr("transform", "translate(0," + (height) + ")")
