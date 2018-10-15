@@ -6,12 +6,10 @@
 		<script type="text/javascript" src="d3.v3.js"></script>
 		<style type="text/css">
 
-		/* On mouse hover, lighten state color */
 		path:hover {
 	    	fill-opacity: .7;
 		}
 
-		/* Style for Custom Tooltip */
 		div.tooltip {
   			position: absolute;
   			text-align: center;
@@ -25,12 +23,10 @@
   			pointer-events: none;
 		}
 
-        /* Legend Font Style */
 		body {
   			font: 11px sans-serif;
 		}
 
-        /* Legend Position Style */
 		.legend {
 			position:absolute;
 			left:800px;
@@ -41,6 +37,8 @@
 		</style>
 	</head>
 	<body>
+		<div id="div1"></div>
+		<div id="div2"></div>
 		<script type="text/javascript">
 
 		var w = 900;
@@ -50,15 +48,15 @@
 							   .translate([w/2, h/2])
 							   .scale([1000]);
 
-		var path = d3.geo.path()               // path generator that will convert GeoJSON to SVG paths
-		  			 .projection(projection);  // tell path generator to use albersUsa projection
+		var path = d3.geo.path()
+		  			 .projection(projection);
 
 		var color = d3.scale.linear()
-							.range(["rgb(213,222,217)","rgb(50,220,21)", "rgb(69,173,168)", "rgb(217,91,67)", "rgb(10,100,200)",]);
+							.range(["rgb(213,222,217)","rgb(50,220,21)", "rgb(69,173,168)", "rgb(237,61,67)", "rgb(10,100,200)",]);
 
 		var legendText = [ "Inner Reforms/Social Equality", "Natonal Safety","Fighting Criminal Activities", "Economic Growth",  "N/A"];
 
-		var svg = d3.select("body")
+		var svg = d3.select("#div1")
 					.append("svg")
 					.attr("width", w)
 					.attr("height", h);
@@ -109,6 +107,13 @@
 		     }
 		   });
 
+		svg.append("text")
+         .attr("x", (w / 2))
+         .attr("y", 40)
+         .attr("text-anchor", "middle")
+         .style("font-size", "16px")
+         .text("What topics did Trump talk about in each state?");
+
 		   d3.csv("http://0.0.0.0:8000/cities.csv", function(data) {
 
 		   	 svg.selectAll("circle")
@@ -127,14 +132,6 @@
 		   	    .style("fill", "rgb(217,91,67)")
 		   	    .style("opacity", 0.85)
 
-		   	    // add browser tooltip of city name
-		   	    //.append("title")
-   				//.text(function(d) {
-        		//		 return d.place;
-   				//});
-
-		        // Modification of custom tooltip code provided by Malcolm Maclean, "D3 Tips and Tricks"
-		        // http://www.d3noob.org/2013/01/adding-tooltips-to-d3js-graph.html
    				.on("mouseover", function(d) {
             		div.transition()
                		   .duration(200)
@@ -144,7 +141,6 @@
                 	   .style("top", (d3.event.pageY - 28) + "px");
             	})
 
-            	// fade out tooltip on mouse out
         		.on("mouseout", function(d) {
            			 div.transition()
              		    .duration(500)
@@ -153,7 +149,6 @@
 
 		});
 
-        // Modified Legend Code from Mike Bostock: http://bl.ocks.org/mbostock/3888852
 		var legend = d3.select("body").append("svg")
       				   .attr("class", "legend")
      				   .attr("width", 140)
@@ -180,5 +175,11 @@
 });
 
 		</script>
+
+		<scirpt type="javascript" src="index2.js"></script>
+
+
+
+
 	</body>
 </html>
